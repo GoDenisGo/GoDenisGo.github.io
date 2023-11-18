@@ -1,0 +1,22 @@
+{
+  "name": "onlinetime",
+  "version": "1.0.0",
+  "description": "Small web server for displaying the time in the user's browser.",
+  "main": "srvr.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoDenisGo/OnlineTime.git"
+  },
+  "author": "Denis Kransiqi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GoDenisGo/OnlineTime/issues"
+  },
+  "homepage": "https://github.com/GoDenisGo/OnlineTime#readme",
+  "dependencies": {
+    "node": "^21.1.0"
+  }
+}

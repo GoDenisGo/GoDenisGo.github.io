@@ -1,6 +1,4 @@
-.idea\modules.xml
-.idea\OnlineTime.iml
-.idea\vcs.xml
 .idea/vcs.xml
 .idea/modules.xml
 .idea/OnlineTime.iml
+./node_modules
