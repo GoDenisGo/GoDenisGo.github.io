@@ -2,3 +2,5 @@
 .idea/modules.xml
 .idea/OnlineTime.iml
 node_modules/
+.idea/inspectionProfiles/Project_Default.xml
+.idea/jsLinters/eslint.xml
