@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="manifest" href="site.webmanifest" />
     <script defer src="index.js"></script>
+    <script type="module" src="./shadow/CustomClock.js"></script>
 
     <title>Time</title>
 </head>
 <body>
     <p>The time is: </p>
     <p class = "time">00:00:00</p>
+
+    <custom-clock title="Custom Clock" radius="100" offset="0"></custom-clock>
+    <custom-clock title="Custom Clock" radius="100" offset="1"></custom-clock>
+    <custom-clock title="Custom Clock" radius="100" offset="2"></custom-clock>
 </body>
 </html>
