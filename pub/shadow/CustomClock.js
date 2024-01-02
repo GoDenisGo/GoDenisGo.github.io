@@ -40,6 +40,7 @@ export class CustomClock extends HTMLElement {
     }
   }
 
+  // TODO: Try to add hour markers (come on, it's only fair to the users)!
   async connectedCallback() {
     ['title', 'radius', 'cx', 'cy', 'offset'].forEach(
       a => (this[a] = this.getAttribute(a) || false),
@@ -69,9 +70,7 @@ export class CustomClock extends HTMLElement {
     this.Circle(this.radius, this.cx, this.cy, 'transparent', 'black');
     this.Circle('0.2vw', this.cx, this.cy, 'grey', 'grey');
 
-    // TODO: Make a smooth transition for the handles so they rotate around the clock.
-    // TODO: Try to add hour markers (come on, it's only fair to the users)!
-    // TODO: Try to experiment with this.cx and this.cy and see how that affects the alignment of the SVG.
+
     await this.setHand(this.cx, this.cy, this.offset);
   }
 
@@ -104,6 +103,7 @@ export class CustomClock extends HTMLElement {
     this.svg.append(line);
   }
 
+  // TODO: Make a smooth transition for the hands so they rotate around the clock.
   async setHand(x, y, offset) {
     const res = await fetch(`time/${offset}`);
     const time = new Date(JSON.parse(await res.text()).date);
