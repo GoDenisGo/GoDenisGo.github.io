@@ -1,14 +1,16 @@
-// class CustomClock is a shadow DOM element to represent different timezones through an analogue representation.
-// CustomClock contains separate SVG elements to provide a digital representation of an analogue clock
-// face.
+// class CustomClock is a shadow DOM element to represent any timezone through an analogue representation.
+// CustomClock contains separate SVG elements to provide an animated digital view of the analogue clock format.
 
 // This class is implemented into HTML using the "<custom-clock>" tag.
 
-// CustomClock is constructed as a sequence of MAIN methods:
-// - Circle: Draw the clock perimeter and center axis where the hands rotate around.
-// - setHand: Set the dimensions of the second, minute and hour hands relative to the radius of the clock perimeter.
+// CustomClock is constructed as the following sequence:
+// - The constructor call initialises a few instance variables such as the dimensions and offset of the elements
+// - The connectedCallback confirms if a few key variables were set, or picks a sensible default.
+// - Circle method: Draw the clock perimeter and center axis where the hands rotate around.
+// - setHand method: Set the dimensions of the clock hands relative to the radius of the clock perimeter.
 
-// The class works by fetching the time at the given offset and rotating the hands to the appropriate angle.
+// The class works by fetching the time at the given offset and rotating the hands to the appropriate angle, before
+// being animated.
 export class CustomClock extends HTMLElement {
   constructor() {
     super();
@@ -40,7 +42,6 @@ export class CustomClock extends HTMLElement {
     }
   }
 
-  // TODO: Try to add hour markers.
   async connectedCallback() {
     ['title', 'radius', 'cx', 'cy', 'offset'].forEach(
       a => (this[a] = this.getAttribute(a) || false),
@@ -49,6 +50,7 @@ export class CustomClock extends HTMLElement {
     this.checkCenterPoints();
 
     this.sf = {
+      marker: 0.05,
       seconds: 0.9,
       minutes: 0.75,
       hours: 0.45,
@@ -72,6 +74,15 @@ export class CustomClock extends HTMLElement {
     this.Circle('0.2vw', this.cx, this.cy, 'grey', 'grey');
 
     await this.setHand(this.cx, this.cy, this.offset);
+    for (let i = 0; i < 360; i += 6) {
+      let markerScaleFactor = this.sf.marker;
+
+      if (i % 30 === 0) {
+        markerScaleFactor = this.sf.marker * 2;
+      }
+
+      this.Marker('marker', 'black', this.cx, this.cy, markerScaleFactor, i);
+    }
   }
 
   addStyles() {
@@ -86,7 +97,7 @@ export class CustomClock extends HTMLElement {
         </style>`;
   }
 
-  // method Circle draws a single SVG circle element representing circular dimensions of the clock design.
+  // Method Circle draws a single SVG circle element representing circular dimensions of the clock design.
   // Can be used for drawing bezels and axis (pivot) where hands rotate around.
   Circle(radius, cx, cy, fill, colour) {
     const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
@@ -98,10 +109,30 @@ export class CustomClock extends HTMLElement {
     this.svg.append(circle);
   }
 
-  // TODO: Implement a marker-drawing mechanism to display hour and minute markers on the clock.
-  Marker() {}
+  // Method Marker draws hour and minute markers along the perimeter.
+  // Accessibility: It is recommended to use two separate scale factors for the hour and minute marks in order to make
+  // it easier to read the clock. The degree of rotation should also be in factors of 360, but not too small as it can
+  // become difficult to tell apart each marker if they are positioned too close to one-another.
+  Marker(idSelector, colour, x, y, sf, rotation) {
+    const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+    line.setAttributeNS(null, 'id', idSelector);
+    line.setAttributeNS(null, 'x1', x);
+    line.setAttributeNS(null, 'y1', `${parseInt(y) + parseInt(this.radius)}`);
+    line.setAttributeNS(null, 'x2', x);
+    line.setAttributeNS(
+      null, 'y2', `${parseInt(y) + parseInt(this.radius) - (parseInt(this.radius) * sf)}`,
+    );
+    line.setAttributeNS(null, 'stroke', colour);
+    line.style.transformOrigin = `${this.cx}px ${this.cy}px`;
 
-  // method Hand draws a single SVG line element to represent a hand of the clock.
+    // The variable rotation describes the initial orientation of the hand.
+    // Subsequent animations must end at 360 degrees plus the initial degree of rotation.
+    line.style.transform = `rotate(${rotation}deg)`;
+
+    this.svg.append(line);
+  }
+
+  // Method Hand draws a single SVG line element to represent a hand of the clock.
   // The length of each hand is measured as a decimal scale factor of the clock's radius.
   Hand(classSelector, colour, x, y, sf, rotation) {
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
@@ -112,6 +143,9 @@ export class CustomClock extends HTMLElement {
     line.setAttributeNS(null, 'y2', `${y - (parseInt(this.radius) * sf)}`);
     line.setAttributeNS(null, 'stroke', colour);
     line.style.transformOrigin = `${this.cx}px ${this.cy}px`;
+
+    // The variable rotation describes the initial orientation of the hand.
+    // Subsequent animations must end at 360 degrees plus the initial degree of rotation.
     line.style.transform = `rotate(${rotation}deg)`;
 
     return line;
@@ -150,13 +184,13 @@ export class CustomClock extends HTMLElement {
         
         @keyframes mRotation {
             to {
-                transform: rotate(${360 + 6 * minutes}deg);
+                transform: rotate(${360 + 6 * minutes + seconds}deg);
             }
         }
         
         @keyframes hRotation {
             to {
-                transform: rotate(${360 + 30 * hours}deg);
+                transform: rotate(${360 + 30 * hours + (6 / 30) * minutes}deg);
             }
         }
     </style>`;
