@@ -10,11 +10,29 @@
     <title>Time</title>
 </head>
 <body>
-    <p>The time is: </p>
-    <p class = "time">00:00:00</p>
+    <section class="time">
+        <custom-clock title="Time in London UK" radius="100" offset="0"></custom-clock>
+        <custom-clock title="Time in UTC+01" radius="100" offset="1"></custom-clock>
+        <custom-clock title="Time in UTC+02" radius="100" offset="2"></custom-clock>
+    </section>
 
-    <custom-clock title="Time in London UK" radius="100" offset="0"></custom-clock>
-    <custom-clock title="Time in UTC+01" radius="100" offset="1"></custom-clock>
-    <custom-clock title="Time in UTC+02" radius="100" offset="2"></custom-clock>
+    <svg class="counter" width="100vw" height="30vh"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <rect width="100%" height="100%" fill="rgb(92, 64, 51)" />
+        <rect class="counterTop" id="shadow" width="100%" height="10%" fill="rgb(148, 131, 84)"/>
+        <text x="50%" y="35%" text-anchor="middle">Enjoy your Timeless Stay.</text>
+    </svg>
+
+    <svg class="counter" width="100vw" height="50vh"
+         xmlns="http://www.w3.org/2000/svg">
+
+        <clipPath id="cut-off-bottom">
+            <rect x="10vw" y="10vh" width="20vw" height="10vh" />
+        </clipPath>
+
+        <circle cx="20vw" cy="20vh" r="5vh" stroke="black" fill="grey" clip-path="url(#cut-off-bottom)">
+        </circle><circle cx="20vw" cy="15vh" r="1.5vh" fill="grey"></circle>
+    </svg>
 </body>
 </html>

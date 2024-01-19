@@ -8,9 +8,11 @@
 // - The connectedCallback confirms if a few key variables were set, or picks a sensible default.
 // - Circle method: Draw the clock perimeter and center axis where the hands rotate around.
 // - setHand method: Set the dimensions of the clock hands relative to the radius of the clock perimeter.
+// - Marker method: Draw hour and minute markers at the same position on the clock and rotate them into the right angle.
 
 // The class works by fetching the time at the given offset and rotating the hands to the appropriate angle, before
 // being animated.
+// TODO: Perhaps provide the user with more styling properties? (Clock Customisation).
 export class CustomClock extends HTMLElement {
   constructor() {
     super();
@@ -89,8 +91,6 @@ export class CustomClock extends HTMLElement {
     this.shadow.innerHTML = `
         <style>
             :host {
-                display: inline-flex;
-                flex: auto;
                 padding-left: 2vw;
                 padding-right: 2vw;
             }
@@ -204,6 +204,12 @@ export class CustomClock extends HTMLElement {
     );
 
     this.svg.append(group);
+  }
+
+  // Method addTitle shows the Title of the clock at the bottom
+  // TODO: Create addTitle method, with position customisation (top, left, right, bottom etc.)
+  addTitle() {
+
   }
 }
 

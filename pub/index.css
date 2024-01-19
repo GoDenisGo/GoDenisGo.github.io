@@ -1,0 +1,36 @@
+/* Whole document styling */
+* {
+  margin: unset;
+}
+
+body {
+  background-color: antiquewhite;
+}
+
+/* Top half */
+
+.time {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  vertical-align: 1px;
+}
+
+custom-clock {
+  padding-top: 20vh;
+}
+
+/* Bottom half */
+
+.counter {
+  position: fixed;
+  bottom: 0;
+}
+
+svg text {
+  font-family: sans-serif;
+}
+
+#shadow {
+  filter: drop-shadow(0 0.3rem 1rem rgba(0, 0, 0, .5));
+}
