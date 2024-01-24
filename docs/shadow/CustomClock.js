@@ -161,9 +161,9 @@ export class CustomClock extends HTMLElement {
       const utcOffsetTime = new Date(local + self.offset * 3600 * 1000);
 
       // re-using res just to match the original use-case and maintain readability.
-      res = {
+      res = JSON.stringify({
         date: utcOffsetTime.toString(),
-      };
+      });
     }
     const time = new Date(JSON.parse(await res.text()).date);
 
