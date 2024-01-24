@@ -2,7 +2,6 @@
   "name": "onlinetime",
   "version": "1.0.0",
   "description": "Small web server for displaying the time in the user's browser.",
-  "main": "srvr.js",
   "scripts": {
     "start": "node srvr.js",
     "test": "echo \"Error: no test specified\" && exit 1"
