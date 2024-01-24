@@ -5,7 +5,7 @@ import { timeOffset } from './times.js';
 // the project root to access this server from other devices.
 const app = express();
 
-app.use(express.static('./pub/'));
+app.use(express.static('./docs/'));
 
 app.get('/time/', function (req, res) {
   res.send(new Date().toLocaleTimeString());
