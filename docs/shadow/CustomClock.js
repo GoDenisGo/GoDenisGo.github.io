@@ -161,6 +161,9 @@ export class CustomClock extends HTMLElement {
       const local = new Date().getTime();
       time = new Date(local + self.offset * 3600 * 1000);
     }
+    console.log('Seconds: ', time.getSeconds());
+    console.log('Minutes: ', time.getMinutes());
+    console.log('Hours: ', time.getHours());
     const seconds = time.getSeconds();
     const minutes = time.getMinutes();
     const hours = time.getHours();
