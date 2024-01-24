@@ -159,7 +159,7 @@ export class CustomClock extends HTMLElement {
       time = new Date(JSON.parse(await res.text()).date);
     } catch (e) {
       const local = new Date().getTime();
-      time = new Date(local + self.offset * 3600 * 1000);
+      time = new Date(local + parseInt(self.offset) * 3600 * 1000);
     }
     console.log('Seconds: ', time.getSeconds());
     console.log('Minutes: ', time.getMinutes());
